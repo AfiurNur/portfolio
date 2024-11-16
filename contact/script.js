@@ -37,7 +37,7 @@ var typed = new Typed('#Gmail', {
 
 //Typing animation
 var typed = new Typed('#works', {
-    strings: ['Web Developer.', 'Graphic Designer.', 'Video Editor.', 'Motion Designer.'],
+    strings: ['Web Developing.', 'Graphic Designing.', 'Video Editing.', 'Motion Designing.'],
     typeSpeed: 100,
     startDelay: 700,
     backSpeed: 35,
