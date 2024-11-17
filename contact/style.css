@@ -184,6 +184,8 @@ nav{
     }
 
     .main-container .image{
+        display: flex;
+        justify-content: center;
         z-index: -1;
         width: 50%;
         height: 60%;
