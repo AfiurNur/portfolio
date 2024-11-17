@@ -134,6 +134,9 @@ h3 {
 
 
 @media (max-width:880px) {
+    body{
+        box-sizing: border-box;
+    }
     nav .logo {
         position: absolute;
         top: 16px;
@@ -150,8 +153,7 @@ h3 {
         display: block;
     }
     .main_container{
-        display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 20px ;
     }
 }
