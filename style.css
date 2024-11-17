@@ -268,9 +268,14 @@ section{
     }
 
     .main-container .image{
+        padding: 0px;
+        margin: 60px;
         z-index: -1;
         width: 50%;
         height: 60%;
+    }
+    .typing-text{
+        font-size: 20px;
     }
 
 }
