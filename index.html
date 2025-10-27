@@ -3,395 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afiur Nur - Digital Artist & Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Afiur Nur - Digital Craftsman</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-background: #0A0A14;
+            --color-primary: #1B1B2F;
+            --color-secondary: #1F1E38;
+            --color-accent: #8A2BE2;
+            --color-accent-light: #A45EFF;
+            --color-text: #F0F2F5;
+            --color-text-secondary: #a8a7b9;
+            --font-primary: 'Space Grotesk', sans-serif;
+            --font-secondary: 'Montserrat', sans-serif;
+            --transition-medium: 0.4s ease-out;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-secondary);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            overflow: hidden;
+            height: 100vh;
+        }
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: -1;
+        }
+        .main-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 25px 0;
+            background: transparent;
+            transition: background-color var(--transition-medium);
+        }
+        header.scrolled {
+            background-color: rgba(10, 10, 20, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a { text-decoration: none; }
+        .logo h2 {
+            font-family: var(--font-primary);
+            font-size: 1.8rem;
+            color: var(--color-text);
+        }
+        .logo span { color: var(--color-accent); }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease-in-out;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero-title {
+            font-family: var(--font-primary);
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--color-text);
+        }
+        .hero-title span { display: inline-block; }
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 400;
+            color: var(--color-accent-light);
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+        .btn {
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+            background: transparent;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--color-accent);
+            transition: width 0.3s ease-in-out;
+            z-index: -1;
+        }
+        .btn:hover::before {
+            width: 100%;
+        }
+        .btn:hover {
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 3rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Three.js Background Container -->
-    <div id="three-container"></div>
+    <canvas id="three-canvas"></canvas>
+    
+    <div class="main-container">
+        <header>
+            <nav class="nav-container">
+                <div class="logo">
+                    <a href="index.html"><h2>AFIUR_<span>NUR</span></h2></a>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="skills.html">Skills</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </nav>
+        </header>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">
-                <a href="#home">
-                    <h2>AFIUR_<span>NUR</span></h2>
-                </a>
-            </div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="section hero">
-        <div class="section-container">
-            <div class="hero-content">
-                <div class="text-reveal">
-                    <h1>Hi! I'm Afiur</h1>
-                </div>
-                <div class="text-reveal">
-                    <h2>Digital <span class="artist">Artist</span> & Developer</h2>
-                </div>
-                <div class="text-reveal">
-                    <p>Creating stunning visual experiences through code and design</p>
-                </div>
-                <div class="cta-buttons">
-                    <a href="#projects" class="btn primary">View My Work</a>
-                    <a href="#contact" class="btn secondary">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section about">
-        <div class="section-container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <div class="section-divider"></div>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Creative Problem Solver</h3>
-                    <p>With 5 years of experience in digital arts and development, I specialize in creating visually compelling and technically sound solutions.</p>
-                    <p>My journey started with graphic design and expanded to include front-end development, Python programming, and video editing. This diverse skill set allows me to approach projects from multiple perspectives.</p>
-                    <div class="experience-highlight">
-                        <div class="highlight-item">
-                            <span class="highlight-number">5+</span>
-                            <span class="highlight-text">Years Experience</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-number">50+</span>
-                            <span class="highlight-text">Projects Completed</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-number">20+</span>
-                            <span class="highlight-text">Happy Clients</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-visual">
-                    <div class="visual-card">
-                        <div class="card-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h4>Web Development</h4>
-                        <p>Creating responsive, modern websites with clean code</p>
-                    </div>
-                    <div class="visual-card">
-                        <div class="card-icon">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <h4>Graphic Design</h4>
-                        <p>Designing compelling visual identities and assets</p>
-                    </div>
-                    <div class="visual-card">
-                        <div class="card-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h4>Video Editing</h4>
-                        <p>Crafting engaging video content with professional editing</p>
-                    </div>
-                    <div class="visual-card">
-                        <div class="card-icon">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <h4>Python Development</h4>
-                        <p>Building efficient applications and automation scripts</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="section skills">
-        <div class="section-container">
-            <div class="section-header">
-                <h2 class="section-title">My Skills</h2>
-                <div class="section-divider"></div>
-            </div>
-            <div class="skills-container">
-                <div class="skill-category">
-                    <h3>Design</h3>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>UI/UX Design</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="95"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Graphic Design</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="90"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Video Editing</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="85"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Development</h3>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>HTML/CSS</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="95"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>JavaScript</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="85"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Python</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="80"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools</h3>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Adobe Creative Suite</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="90"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Figma</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="85"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>VS Code</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-width="95"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="section projects">
-        <div class="section-container">
-            <div class="section-header">
-                <h2 class="section-title">My Projects</h2>
-                <div class="section-divider"></div>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="image-placeholder">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Brand Identity Design</h3>
-                        <p>Complete visual identity for a tech startup including logo, color palette, and brand guidelines.</p>
-                        <div class="project-tags">
-                            <span>Graphic Design</span>
-                            <span>Branding</span>
-                        </div>
-                        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="image-placeholder">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>E-commerce Website</h3>
-                        <p>Responsive online store with custom product filters, cart functionality, and secure checkout.</p>
-                        <div class="project-tags">
-                            <span>Web Development</span>
-                            <span>UI/UX</span>
-                        </div>
-                        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="image-placeholder">
-                            <i class="fas fa-video"></i>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Corporate Video Series</h3>
-                        <p>Series of promotional videos for a corporate client including motion graphics and sound design.</p>
-                        <div class="project-tags">
-                            <span>Video Editing</span>
-                            <span>Motion Graphics</span>
-                        </div>
-                        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <div class="image-placeholder">
-                            <i class="fab fa-python"></i>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>Data Visualization Tool</h3>
-                        <p>Python application for processing and visualizing complex datasets with interactive charts.</p>
-                        <div class="project-tags">
-                            <span>Python</span>
-                            <span>Data Visualization</span>
-                        </div>
-                        <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="github-cta">
-                <p>Want to see more of my work?</p>
-                <a href="https://github.com/afiurnur" class="btn github-btn" target="_blank">
-                    <i class="fab fa-github"></i> Visit My GitHub
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="section-container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <div class="section-divider"></div>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Let's Create Something Amazing Together</h3>
-                    <p>I'm always interested in new opportunities and creative projects. Whether you need a website, design work, or development assistance, let's talk!</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h4>Email</h4>
-                                <p>contact@afiurnur.com</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>+1 (555) 123-4567</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h4>Location</h4>
-                                <p>Digital Nomad</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-dribbble"></i></a>
-                        <a href="#"><i class="fab fa-behance"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" required>
-                            <label for="name">Your Name</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" required>
-                            <label for="email">Your Email</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" required>
-                            <label for="subject">Subject</label>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                            <label for="message">Your Message</label>
-                        </div>
-                        <button type="submit" class="btn primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h2>AFIUR_<span>NUR</span></h2>
-                    <p>Digital Artist & Developer</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 Afiur Nur. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
+        <main>
+            <section class="hero">
+                <h1 class="hero-title">
+                    <span>D</span><span>i</span><span>g</span><span>i</span><span>t</span><span>a</span><span>l</span>
+                    <span>&nbsp;</span>
+                    <span>C</span><span>r</span><span>a</span><span>f</span><span>t</span><span>s</span><span>m</span><span>a</span><span>n</span>
+                </h1>
+                <h2 class="hero-subtitle">Weaving Code and Creativity into Seamless Digital Experiences.</h2>
+                <a href="projects.html" class="btn">Explore My Work</a>
+            </section>
+        </main>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+        // --- 3D Background ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.querySelector('#three-canvas'), 
+            antialias: true,
+            alpha: true 
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setClearColor(0x0A0A14, 1);
+
+        // Starfield
+        const starGeometry = new THREE.BufferGeometry();
+        const starCount = 15000;
+        const posArray = new Float32Array(starCount * 3);
+        const colorArray = new Float32Array(starCount * 3);
+        const sizeArray = new Float32Array(starCount);
+        
+        for (let i = 0; i < starCount * 3; i += 3) {
+            // Position
+            posArray[i] = (Math.random() - 0.5) * 2000;
+            posArray[i+1] = (Math.random() - 0.5) * 2000;
+            posArray[i+2] = (Math.random() - 0.5) * 2000;
+            
+            // Color - mostly white with some purple/blue tinted stars
+            const colorChoice = Math.random();
+            if (colorChoice < 0.9) {
+                // White stars
+                colorArray[i] = 1;
+                colorArray[i+1] = 1;
+                colorArray[i+2] = 1;
+            } else if (colorChoice < 0.95) {
+                // Purple tinted stars
+                colorArray[i] = 0.8;
+                colorArray[i+1] = 0.6;
+                colorArray[i+2] = 1;
+            } else {
+                // Blue tinted stars
+                colorArray[i] = 0.6;
+                colorArray[i+1] = 0.7;
+                colorArray[i+2] = 1;
+            }
+            
+            // Size - random between 0.5 and 1.5
+            sizeArray[i/3] = Math.random() + 0.5;
+        }
+        
+        starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        starGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+        starGeometry.setAttribute('size', new THREE.BufferAttribute(sizeArray, 1));
+        
+        const starMaterial = new THREE.PointsMaterial({ 
+            size: 1,
+            vertexColors: true,
+            sizeAttenuation: true
+        });
+        
+        const starMesh = new THREE.Points(starGeometry, starMaterial);
+        scene.add(starMesh);
+
+        // Donut (torus)
+        const torusGeometry = new THREE.TorusGeometry(2, 0.5, 16, 100);
+        const torusMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0xA45EFF, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.7
+        });
+        const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+        torus.position.z = -5;
+        scene.add(torus);
+
+        // First additional element - Icosahedron
+        const icosaGeometry = new THREE.IcosahedronGeometry(1.5, 0);
+        const icosaMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x8A2BE2, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5
+        });
+        const icosa = new THREE.Mesh(icosaGeometry, icosaMaterial);
+        icosa.position.x = -4;
+        icosa.position.y = 2;
+        icosa.position.z = -3;
+        scene.add(icosa);
+
+        // Second additional element - Octahedron
+        const octaGeometry = new THREE.OctahedronGeometry(1.2, 0);
+        const octaMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x4A00E0, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.6
+        });
+        const octa = new THREE.Mesh(octaGeometry, octaMaterial);
+        octa.position.x = 4;
+        octa.position.y = -2;
+        octa.position.z = -2;
+        scene.add(octa);
+
+        // Mouse movement
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        // Animation loop
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const elapsedTime = clock.getElapsedTime();
+            
+            // Star rotation
+            starMesh.rotation.y += 0.0002;
+            
+            // Camera movement based on mouse
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            
+            // Animate torus
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.005;
+            torus.scale.x = Math.sin(elapsedTime) * 0.1 + 1;
+            torus.scale.y = Math.sin(elapsedTime) * 0.1 + 1;
+            torus.scale.z = Math.sin(elapsedTime) * 0.1 + 1;
+            
+            // Animate icosahedron
+            icosa.rotation.x += 0.008;
+            icosa.rotation.y += 0.006;
+            icosa.position.y = 2 + Math.sin(elapsedTime * 0.5) * 0.5;
+            
+            // Animate octahedron
+            octa.rotation.x += 0.007;
+            octa.rotation.z += 0.009;
+            octa.position.x = 4 + Math.sin(elapsedTime * 0.7) * 0.3;
+            
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // --- Animations ---
+        // Hero animations
+        gsap.from('.hero-title span', {
+            y: 100,
+            opacity: 0,
+            stagger: 0.05,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.5
+        });
+        gsap.from('.hero-subtitle', { y: 50, opacity: 0, duration: 1, ease: "power2.out", delay: 1 });
+        gsap.from('.btn', { y: 30, opacity: 0, duration: 1, ease: "power2.out", delay: 1.5 });
+        
+        // --- Header Scroll Effect ---
+        // Since we don't have scrolling, we'll use a timeout to add the scrolled class
+        // This gives a subtle effect after page load
+        const header = document.querySelector('header');
+        setTimeout(() => {
+            header.classList.add('scrolled');
+        }, 2000);
+    </script>
 </body>
 </html>
