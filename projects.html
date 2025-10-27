@@ -4,137 +4,278 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afiur Nur - Projects</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-background: #0A0A14;
-            --color-primary: #1B1B2F;
-            --color-secondary: #1F1E38;
-            --color-accent: #8A2BE2;
-            --color-accent-light: #A45EFF;
-            --color-text: #F0F2F5;
-            --color-text-secondary: #a8a7b9;
-            --font-primary: 'Space Grotesk', sans-serif;
-            --font-secondary: 'Montserrat', sans-serif;
-            --transition-medium: 0.4s ease-out;
+            --color-bg: #0a0a14;
+            --color-surface: #131320;
+            --color-surface-light: #1c1c2e;
+            --color-primary: #7c3aed;
+            --color-primary-light: #8b5cf6;
+            --color-secondary: #06b6d4;
+            --color-text: #f8fafc;
+            --color-text-secondary: #cbd5e1;
+            --color-border: #2d2d42;
+            --font-primary: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --radius: 12px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: var(--font-secondary);
-            background-color: var(--color-background);
+            font-family: var(--font-primary);
+            background-color: var(--color-bg);
             color: var(--color-text);
-            overflow: hidden;
-            height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
         }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .gradient-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            transition: transform 0.5s ease-out;
+        }
+
+        .circle-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--color-primary);
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--color-secondary);
+            top: 60%;
+            right: 10%;
+        }
+
+        .circle-3 {
+            width: 250px;
+            height: 250px;
+            background: #ec4899;
+            bottom: 10%;
+            left: 20%;
+        }
+
+        /* Three.js Background */
         #three-canvas {
             position: fixed;
             top: 0;
             left: 0;
             outline: none;
-            z-index: -1;
+            z-index: -4;
         }
-        .main-container {
-            position: absolute;
+
+        /* Interactive Background */
+        .interactive-bg {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            z-index: -3;
             overflow: hidden;
         }
+
+        .interactive-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+        }
+
+        .interactive-element:hover {
+            background: rgba(124, 58, 237, 0.2);
+            transform: scale(1.5);
+        }
+
+        /* Particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: particle-float 20s infinite linear;
+            cursor: pointer;
+            pointer-events: all;
+        }
+
+        .particle:hover {
+            background: var(--color-primary);
+            transform: scale(1.5);
+            box-shadow: 0 0 20px var(--color-primary);
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 25px 0;
-            background: transparent;
-            transition: background-color var(--transition-medium);
+            padding: 24px 0;
+            transition: var(--transition);
         }
+
         header.scrolled {
-            background-color: rgba(10, 10, 20, 0.7);
+            background: rgba(10, 10, 20, 0.8);
             backdrop-filter: blur(10px);
+            padding: 16px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
+
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .logo a { text-decoration: none; }
-        .logo h2 {
-            font-family: var(--font-primary);
-            font-size: 1.8rem;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 20px;
             color: var(--color-text);
         }
-        .logo span { color: var(--color-accent); }
-        .nav-links { display: flex; gap: 40px; }
+
+        .logo-text span {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
         .nav-links a {
+            color: var(--color-text-secondary);
             text-decoration: none;
-            color: var(--color-text);
             font-weight: 500;
             position: relative;
-            padding-bottom: 5px;
+            transition: var(--transition);
         }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--color-text);
+        }
+
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -5px;
             left: 0;
-            width: 100%;
+            width: 0;
             height: 2px;
-            background: var(--color-accent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease-in-out;
+            background: var(--color-primary);
+            transition: var(--transition);
         }
-        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
-        
-        /* Custom Scroll Container */
-        .scroll-container {
-            position: absolute;
-            top: 100px;
-            left: 0;
+
+        .nav-links a:hover::after, .nav-links a.active::after {
             width: 100%;
-            height: calc(100vh - 100px);
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding-bottom: 50px;
         }
-        
-        /* Custom Scrollbar */
-        .scroll-container::-webkit-scrollbar {
-            width: 8px;
+
+        /* Main Content */
+        .main-container {
+            min-height: 100vh;
+            padding: 120px 40px 80px;
         }
-        .scroll-container::-webkit-scrollbar-track {
-            background: rgba(27, 27, 47, 0.3);
-            border-radius: 10px;
-        }
-        .scroll-container::-webkit-scrollbar-thumb {
-            background: var(--color-accent);
-            border-radius: 10px;
-        }
-        .scroll-container::-webkit-scrollbar-thumb:hover {
-            background: var(--color-accent-light);
-        }
-        
+
         .page-content {
-            padding: 50px 40px 100px;
             max-width: 1400px;
             margin: 0 auto;
         }
+
         .page-title {
-            font-family: var(--font-primary);
             font-size: 4rem;
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--color-text), var(--color-primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
             position: relative;
         }
+
         .page-title::after {
             content: '';
             position: absolute;
@@ -143,89 +284,155 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: var(--color-accent);
+            background: var(--color-primary);
             border-radius: 2px;
         }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--color-text-secondary);
+            text-align: center;
+            max-width: 600px;
+            margin: 50px auto 80px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Projects Grid */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
+            gap: 30px;
+            margin-bottom: 80px;
         }
+
         .project-card {
-            background: rgba(27, 27, 47, 0.7);
-            border: 1px solid var(--color-secondary);
-            border-radius: 15px;
+            background: var(--color-surface);
+            border-radius: var(--radius);
             overflow: hidden;
-            transition: all var(--transition-medium);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--color-border);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(10px);
-            opacity: 1;
-            transform: translateY(0);
         }
+
         .project-card:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
-            border-color: var(--color-accent);
+            transform: translateY(-10px);
+            border-color: var(--color-primary);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
         }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(124, 58, 237, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            transform: translateX(100%);
+        }
+
         .project-3d-container {
             height: 220px;
-            cursor: grab;
             position: relative;
             overflow: hidden;
             background: rgba(27, 27, 47, 0.3);
         }
-        .project-content { 
-            padding: 25px; 
+
+        .project-content {
+            padding: 25px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-        .project-content h3 {
-            font-family: var(--font-primary);
-            font-size: 1.5rem;
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 15px;
         }
-        .project-content p {
+
+        .project-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--color-primary);
+            font-size: 18px;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .project-description {
             color: var(--color-text-secondary);
             margin-bottom: 20px;
-            font-size: 1rem;
             line-height: 1.6;
         }
-        .project-tags span {
-            background: rgba(138, 43, 226, 0.2);
-            color: var(--color-accent-light);
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-tag {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--color-primary-light);
             padding: 6px 15px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 5px;
+            transition: var(--transition);
         }
-        
-        /* Section divider */
+
+        .project-tag:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Section Divider */
         .section-divider {
             text-align: center;
             margin: 80px 0 60px;
             position: relative;
+            opacity: 0;
+            transform: translateY(30px);
         }
+
         .section-divider h2 {
-            font-family: var(--font-primary);
             font-size: 2.5rem;
-            margin-bottom: 30px;
-            color: var(--color-accent-light);
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--color-primary-light);
         }
+
         .divider-line {
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+            background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
             width: 80%;
             margin: 0 auto;
         }
-        
-        /* Scroll indicator */
+
+        /* Scroll Indicator */
         .scroll-indicator {
             position: fixed;
             right: 30px;
@@ -236,11 +443,13 @@
             align-items: center;
             z-index: 100;
         }
+
         .scroll-dots {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
+
         .scroll-dot {
             width: 12px;
             height: 12px;
@@ -249,10 +458,12 @@
             transition: all 0.3s ease;
             cursor: pointer;
         }
+
         .scroll-dot.active {
-            background: var(--color-accent);
+            background: var(--color-primary);
             transform: scale(1.3);
         }
+
         .scroll-text {
             writing-mode: vertical-rl;
             text-orientation: mixed;
@@ -261,261 +472,374 @@
             margin-bottom: 20px;
             letter-spacing: 2px;
         }
-        
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(3deg);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive */
         @media (max-width: 1200px) {
             .projects-grid {
                 grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             }
         }
-        
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .page-content {
-                padding: 50px 20px 80px;
-            }
+
+        @media (max-width: 968px) {
             .page-title {
-                font-size: 2.8rem;
-                margin-bottom: 60px;
+                font-size: 3rem;
             }
+            
             .projects-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
             }
-            .project-3d-container {
-                height: 200px;
+            
+            .nav-links {
+                gap: 20px;
             }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 100px 20px 60px;
+            }
+            
+            .nav-container {
+                padding: 0 20px;
+            }
+            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
             .scroll-indicator {
+                display: none;
+            }
+            
+            .nav-links {
                 display: none;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Three.js Background -->
     <canvas id="three-canvas"></canvas>
-    <div class="main-container">
-        <header>
-            <nav class="nav-container">
-                <div class="logo">
-                    <a href="index.html"><h2>AFIUR_<span>NUR</span></h2></a>
-                </div>
-                <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="projects.html" class="active">Projects</a>
-                    <a href="skills.html">Skills</a>
-                    <a href="contact.html">Contact</a>
-                </div>
-            </nav>
-        </header>
 
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-            <div class="scroll-text">SCROLL</div>
-            <div class="scroll-dots">
-                <div class="scroll-dot active" data-section="featured"></div>
-                <div class="scroll-dot" data-section="web"></div>
-                <div class="scroll-dot" data-section="mobile"></div>
-                <div class="scroll-dot" data-section="design"></div>
+    <!-- Interactive Background -->
+    <div class="interactive-bg" id="interactive-bg"></div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="gradient-circle circle-1 floating"></div>
+        <div class="gradient-circle circle-2 floating" style="animation-delay: -2s;"></div>
+        <div class="gradient-circle circle-3 floating" style="animation-delay: -4s;"></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles-container" id="particles-container"></div>
+
+    <!-- Header -->
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">A</div>
+                <div class="logo-text">Afiur<span>Nur</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="skills.html">Skills</a>
+                <a href="contact.html">Contact</a>
             </div>
-        </div>
+        </nav>
+    </header>
 
-        <!-- Scrollable Content -->
-        <div class="scroll-container">
-            <main class="page-content">
-                <h1 class="page-title">Featured Work</h1>
-                
-                <div class="projects-grid" id="featured-section">
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="box"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Brand Identity Design</h3>
-                                <p>Complete visual identity for a tech startup, creating a cohesive and memorable brand experience across all touchpoints including logo, typography, and color systems.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Branding</span>
-                                <span>UI/UX</span>
-                                <span>Visual Design</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="torus"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>E-commerce Platform</h3>
-                                <p>A feature-rich, responsive online store with a custom backend for product management, inventory tracking, and secure payment processing.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Web Dev</span>
-                                <span>React</span>
-                                <span>Node.js</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="sphere"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Corporate Video Series</h3>
-                                <p>A series of promotional videos with motion graphics to enhance brand storytelling and engage target audiences across digital platforms.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Video Editing</span>
-                                <span>Motion Graphics</span>
-                                <span>Animation</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="icosahedron"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Data Visualization Tool</h3>
-                                <p>A Python application for processing and visualizing complex datasets with interactive charts and real-time analytics dashboards.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Python</span>
-                                <span>Data Viz</span>
-                                <span>Analytics</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section-divider" id="web-section">
-                    <h2>Web Development</h2>
-                    <div class="divider-line"></div>
-                </div>
-                
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="torus"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Portfolio Website</h3>
-                                <p>A responsive portfolio website with custom animations and 3D elements to showcase creative work in an engaging way.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>HTML/CSS</span>
-                                <span>JavaScript</span>
-                                <span>Three.js</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="box"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>SAAS Dashboard</h3>
-                                <p>A comprehensive admin dashboard for a software-as-a-service platform with real-time metrics and user management.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>React</span>
-                                <span>TypeScript</span>
-                                <span>API Integration</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="sphere"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Interactive Web App</h3>
-                                <p>An interactive web application with real-time collaboration features and dynamic content generation.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Vue.js</span>
-                                <span>WebSockets</span>
-                                <span>Real-time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section-divider" id="mobile-section">
-                    <h2>Mobile Applications</h2>
-                    <div class="divider-line"></div>
-                </div>
-                
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="icosahedron"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Fitness Tracking App</h3>
-                                <p>A mobile application for tracking workouts, nutrition, and progress with personalized recommendations.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>React Native</span>
-                                <span>HealthKit</span>
-                                <span>Firebase</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="torus"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Travel Planner</h3>
-                                <p>An intuitive travel planning app with itinerary management, location-based recommendations, and offline maps.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Flutter</span>
-                                <span>Maps API</span>
-                                <span>Cloud Storage</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section-divider" id="design-section">
-                    <h2>UI/UX Design</h2>
-                    <div class="divider-line"></div>
-                </div>
-                
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="box"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>Design System</h3>
-                                <p>A comprehensive design system with reusable components, guidelines, and documentation for consistent brand experiences.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>Figma</span>
-                                <span>Design Systems</span>
-                                <span>UI Components</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-3d-container" data-shape="sphere"></div>
-                        <div class="project-content">
-                            <div>
-                                <h3>User Research & Testing</h3>
-                                <p>Comprehensive user research and usability testing to improve product experiences and identify pain points.</p>
-                            </div>
-                            <div class="project-tags">
-                                <span>User Research</span>
-                                <span>Usability Testing</span>
-                                <span>Wireframing</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-text">SCROLL</div>
+        <div class="scroll-dots">
+            <div class="scroll-dot active" data-section="featured"></div>
+            <div class="scroll-dot" data-section="web"></div>
+            <div class="scroll-dot" data-section="mobile"></div>
+            <div class="scroll-dot" data-section="design"></div>
         </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <main class="page-content">
+            <h1 class="page-title">Featured Work</h1>
+            <p class="page-subtitle">A showcase of my recent projects across design, development, and creative technology. Each project represents a unique challenge and solution.</p>
+            
+            <div class="projects-grid" id="featured-section">
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="box"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <h3 class="project-title">Brand Identity Design</h3>
+                            </div>
+                            <p class="project-description">Complete visual identity for a tech startup, creating a cohesive and memorable brand experience across all touchpoints including logo, typography, and color systems.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Branding</span>
+                            <span class="project-tag">UI/UX</span>
+                            <span class="project-tag">Visual Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="torus"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <h3 class="project-title">E-commerce Platform</h3>
+                            </div>
+                            <p class="project-description">A feature-rich, responsive online store with a custom backend for product management, inventory tracking, and secure payment processing.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Web Dev</span>
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="sphere"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <h3 class="project-title">Corporate Video Series</h3>
+                            </div>
+                            <p class="project-description">A series of promotional videos with motion graphics to enhance brand storytelling and engage target audiences across digital platforms.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Video Editing</span>
+                            <span class="project-tag">Motion Graphics</span>
+                            <span class="project-tag">Animation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="icosahedron"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h3 class="project-title">Data Visualization Tool</h3>
+                            </div>
+                            <p class="project-description">A Python application for processing and visualizing complex datasets with interactive charts and real-time analytics dashboards.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Data Viz</span>
+                            <span class="project-tag">Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-divider" id="web-section">
+                <h2>Web Development</h2>
+                <div class="divider-line"></div>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="torus"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <h3 class="project-title">Portfolio Website</h3>
+                            </div>
+                            <p class="project-description">A responsive portfolio website with custom animations and 3D elements to showcase creative work in an engaging way.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">HTML/CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Three.js</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="box"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3 class="project-title">SAAS Dashboard</h3>
+                            </div>
+                            <p class="project-description">A comprehensive admin dashboard for a software-as-a-service platform with real-time metrics and user management.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">TypeScript</span>
+                            <span class="project-tag">API Integration</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="sphere"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h3 class="project-title">Interactive Web App</h3>
+                            </div>
+                            <p class="project-description">An interactive web application with real-time collaboration features and dynamic content generation.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Vue.js</span>
+                            <span class="project-tag">WebSockets</span>
+                            <span class="project-tag">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-divider" id="mobile-section">
+                <h2>Mobile Applications</h2>
+                <div class="divider-line"></div>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="icosahedron"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-dumbbell"></i>
+                                </div>
+                                <h3 class="project-title">Fitness Tracking App</h3>
+                            </div>
+                            <p class="project-description">A mobile application for tracking workouts, nutrition, and progress with personalized recommendations.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">React Native</span>
+                            <span class="project-tag">HealthKit</span>
+                            <span class="project-tag">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="torus"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </div>
+                                <h3 class="project-title">Travel Planner</h3>
+                            </div>
+                            <p class="project-description">An intuitive travel planning app with itinerary management, location-based recommendations, and offline maps.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Flutter</span>
+                            <span class="project-tag">Maps API</span>
+                            <span class="project-tag">Cloud Storage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-divider" id="design-section">
+                <h2>UI/UX Design</h2>
+                <div class="divider-line"></div>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="box"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-pencil-ruler"></i>
+                                </div>
+                                <h3 class="project-title">Design System</h3>
+                            </div>
+                            <p class="project-description">A comprehensive design system with reusable components, guidelines, and documentation for consistent brand experiences.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Figma</span>
+                            <span class="project-tag">Design Systems</span>
+                            <span class="project-tag">UI Components</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-3d-container" data-shape="sphere"></div>
+                    <div class="project-content">
+                        <div>
+                            <div class="project-header">
+                                <div class="project-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3 class="project-title">User Research & Testing</h3>
+                            </div>
+                            <p class="project-description">Comprehensive user research and usability testing to improve product experiences and identify pain points.</p>
+                        </div>
+                        <div class="project-tags">
+                            <span class="project-tag">User Research</span>
+                            <span class="project-tag">Usability Testing</span>
+                            <span class="project-tag">Wireframing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
-        // --- Enhanced Background ---
+        // Three.js Starfield Background
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 5;
-
         const renderer = new THREE.WebGLRenderer({ 
             canvas: document.querySelector('#three-canvas'), 
             antialias: true,
@@ -629,15 +953,102 @@
         }
         animate();
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        // Create interactive background elements
+        function createInteractiveBackground() {
+            const container = document.getElementById('interactive-bg');
+            const elementCount = 15;
+            
+            for (let i = 0; i < elementCount; i++) {
+                const element = document.createElement('div');
+                element.classList.add('interactive-element');
+                
+                // Random properties
+                const size = Math.random() * 80 + 20;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const opacity = Math.random() * 0.1 + 0.05;
+                
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.left = `${posX}%`;
+                element.style.top = `${posY}%`;
+                element.style.opacity = opacity;
+                element.style.transition = `all 0.3s ease, transform 0.5s ease ${i * 0.1}s`;
+                
+                container.appendChild(element);
+            }
+        }
 
-        // --- Enhanced 3D Project Placeholders ---
-        document.addEventListener('DOMContentLoaded', function() {
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 6 + 2;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 20 + 20;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}vw`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Interactive gradient circles
+        function makeCirclesInteractive() {
+            const circles = document.querySelectorAll('.gradient-circle');
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                circles.forEach((circle, index) => {
+                    const moveX = (mouseX - 0.5) * 50;
+                    const moveY = (mouseY - 0.5) * 50;
+                    
+                    // Each circle moves differently based on index
+                    circle.style.transform = `translate(${moveX * (index + 1)}px, ${moveY * (index + 1)}px)`;
+                });
+            });
+        }
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.page-title, .page-subtitle, .project-card, .section-divider');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                    element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                }
+            });
+        }
+        
+        // Header scroll effect
+        function handleHeaderScroll() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        // Enhanced 3D Project Placeholders
+        function createProject3DElements() {
             document.querySelectorAll('.project-3d-container').forEach(container => {
                 const width = container.clientWidth || 300;
                 const height = container.clientHeight || 220;
@@ -756,28 +1167,13 @@
                 }
                 animate();
             });
-        });
-        
-        // --- Header Effect ---
-        const header = document.querySelector('header');
-        const scrollContainer = document.querySelector('.scroll-container');
-        
-        scrollContainer.addEventListener('scroll', () => {
-            if (scrollContainer.scrollTop > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-            
-            // Update scroll indicator
-            updateScrollIndicator();
-        });
-        
+        }
+
         // Scroll indicator functionality
         function updateScrollIndicator() {
             const sections = document.querySelectorAll('.section-divider, #featured-section');
             const scrollDots = document.querySelectorAll('.scroll-dot');
-            const scrollPosition = scrollContainer.scrollTop + 150;
+            const scrollPosition = window.scrollY + 150;
             
             sections.forEach((section, index) => {
                 const sectionTop = section.offsetTop;
@@ -791,58 +1187,49 @@
         }
         
         // Scroll to section when clicking on dots
-        document.querySelectorAll('.scroll-dot').forEach(dot => {
-            dot.addEventListener('click', () => {
-                const sectionId = dot.getAttribute('data-section') + '-section';
-                const section = document.getElementById(sectionId);
-                
-                if (section) {
-                    scrollContainer.scrollTo({
-                        top: section.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
+        function setupScrollIndicators() {
+            document.querySelectorAll('.scroll-dot').forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const sectionId = dot.getAttribute('data-section') + '-section';
+                    const section = document.getElementById(sectionId);
+                    
+                    if (section) {
+                        window.scrollTo({
+                            top: section.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
-        });
+        }
         
-        // --- Page Animations ---
-        gsap.registerPlugin(ScrollTrigger);
-        
-        gsap.from('.page-title', { 
-            opacity: 0, 
-            y: -50, 
-            duration: 1, 
-            delay: 0.5 
-        });
-        
-        // Animate project cards on scroll
-        gsap.utils.toArray('.project-card').forEach(card => {
-            gsap.from(card, {
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                }
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createInteractiveBackground();
+            createParticles();
+            makeCirclesInteractive();
+            createProject3DElements();
+            setupScrollIndicators();
+            
+            // Initial animation for elements
+            setTimeout(() => {
+                animateOnScroll();
+            }, 300);
+            
+            // Event listeners
+            window.addEventListener('scroll', () => {
+                handleHeaderScroll();
+                animateOnScroll();
+                updateScrollIndicator();
             });
-        });
-        
-        // Animate section dividers
-        gsap.utils.toArray('.section-divider').forEach(divider => {
-            gsap.from(divider, {
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-                scrollTrigger: {
-                    trigger: divider,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
 
+            // Handle window resize for Three.js
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        });
     </script>
 </body>
 </html>
